@@ -153,60 +153,61 @@ public class SearchInFiles
         
        //=== SUBSTITUTION =====================================================
         
-        File Log = new File("log.txt");
-        String log = "Log File :  \r\n";
-        
-        for(int i = 0; i < N.length; i++)
-        {
-            File oldFile = new File(soursePath.concat(N[i]));  
-            File newFile = new File(dstDirName.concat(N[i]));           
-            
         try
-        {  
-            LineNumberReader LNR = new LineNumberReader(new InputStreamReader (new FileInputStream(oldFile) , "CP1251"));
-            
-            FileWriter FW = new FileWriter(newFile);            
-            FileWriter logWr = new FileWriter(Log);            
-            
-            int subsCount = 0;            
-            
-            while(true)
-                {          
-                    String line = LNR.readLine();
-                    
-                    if (line == null)
-                    {
-                        break;
-                    }
-                    
-                    if(line.contains(KeyWord))
-                    {
-                        line = line.replace(KeyWord,SubsWord);
-                        subsCount++;                   
-                    }
-                    
-                    FW.flush();
-                    FW.write(line);
-                    FW.write("\r\n");
-                }
-            
-            FW.close();
-            
-            LNR.close();
-            
-            
-             log = log.concat("in file : " + dstDirName.concat(N[i]) + " word " + KeyWord + " was replaced " + subsCount + " times. \r\n" );
-             
-             logWr.write(log);
-             
-             logWr.close();                
-        }
-        
-        catch (Exception e) 
         {
-            System.out.println("Error345 : " + e.getMessage());
+            File Log = new File("log.txt");
+            String log = "Log File :  \r\n";
+            FileWriter logWr = new FileWriter(Log);  
+            
+            for(int i = 0; i < N.length; i++)
+            {
+                File oldFile = new File(soursePath.concat(N[i]));  
+                File newFile = new File(dstDirName.concat(N[i]));           
+                
+                try
+                {  
+                    LineNumberReader LNR = new LineNumberReader(new InputStreamReader (new FileInputStream(oldFile) , "CP1251"));
+                    
+                    FileWriter FW = new FileWriter(newFile);          
+                    int subsCount = 0;            
+                    
+                    while(true)
+                        {          
+                            String line = LNR.readLine();
+                            
+                            if (line == null)
+                            {
+                                break;
+                            }
+                            
+                            if(line.contains(KeyWord))
+                            {
+                                line = line.replace(KeyWord,SubsWord);
+                                subsCount++;                   
+                            }
+                            
+                            FW.flush();
+                            FW.write(line);
+                            FW.write("\r\n");
+                        }
+                    
+                    FW.close();
+                    LNR.close();
+                    
+                    log = log.concat("in file : " + dstDirName.concat(N[i]) + " word " + KeyWord + " was replaced " + subsCount + " times. \r\n" );
+                                  
+                }
+                catch (Exception e) 
+                {
+                    System.out.println("Error Coping & Replace Words : " + e.getMessage());
+                }
+            }               // end of cicle FOR
+            logWr.write(log);
+            logWr.close();   
         }
-        
-        }               // end of cicle FOR
+        catch(Exception e)
+        {
+            System.out.println("Error creating logfile : " + e.getMessage());
+        }
     }    
 }
