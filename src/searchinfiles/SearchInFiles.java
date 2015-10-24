@@ -172,13 +172,6 @@ public class SearchInFiles
             
             while(true)
                 {          
-                    
-//                    int cnt = FIS.read(buf , 0 , buf.length);
-//                    if (cnt == -1)
-//                    {
-//                        break;
-//                    }
-                    
                     String line = LNR.readLine();
                     
                     if (line == null)
